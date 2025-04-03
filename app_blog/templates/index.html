@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <title>Blog</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+<body>
+    <h1>Категорії</h1>
+    
+    {% if categories %}
+        {% for item in categories %}
+            <div class="category-item">
+                <a href="{{ item.get_absolute_url }}">
+                    <h2>{{ item.category }}</h2>
+                </a>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if articles %}
+        <h2>Останні публікації</h2>
+        {% for item in articles %}
+            <div class="article-item">
+                <a href="{{ item.get_absolute_url }}">
+                    <h3>{{ item.title }}</h3>
+                </a>
+                <time class="article-date">
+                    {{ item.pub_date|date:"j E Y" }}
+                </time>
+                <div class="article-excerpt">
+                    {{ item.description|striptags|truncatewords_html:32 }}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="all-articles-link">
+        <a href="{% url 'articles-list' %}">
+            <h3>Всі публікації →</h3>
+        </a>
+    </div>
+</body>
+</html>
